@@ -58,8 +58,11 @@ inout:
         movq    $0, %rax                    # move 0 to rax register so that the system calls the correct function
         call    printf                      # call the print function from the C standard library
 
-        # output incremented number
+        movq %rbp, %rsp                     # move register of the base pointer to the reigster of the stack pointer
+        popq %rbp                           # pop base pointer (remove base pointer aka first element of the stack)
+        ret                                 # return
 
+# output incremented number
 my_increment:
         pushq %rbp                          # boilerplate for setting up local stack
         movq %rsp, %rbp
