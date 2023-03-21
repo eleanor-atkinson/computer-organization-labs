@@ -17,7 +17,7 @@
 #endif
 
 .text
-# your strings here
+        format_string: .asciz "%ld";         # long digit/quadword format string (meaning a long C)
 
 .global my_main                         # make my_main accessible globally
 .global my_increment                    # make my_increment accessible globally
@@ -43,6 +43,14 @@ inout:
         movq %rsp, %rbp                     # move stack pointer to point to same location as base register on inout local stack
 
         subq $16, %rsp                      # move the stack pointer two positions forward so we know where the end is
+
+        
+        movq $0, %rax                       # boilerplate to be able to use the rax register
+        leaq format_string(%rip), %rdi      # load effective address of format string into the register of the first argument
+        leaq -8(%rbp), %rsi                 # load memory address of the first spot in the stack into the register of the second argument
+        call scanf                          # call scanf from the C standard library
+
+        
 
         call    my_increment
 
