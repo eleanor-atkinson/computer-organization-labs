@@ -50,9 +50,8 @@ inout:
         leaq -8(%rbp), %rsi                 # load memory address of the first spot in the stack into the register of the second argument
         call scanf                          # call scanf from the C standard library
 
-        
-
-        call    my_increment
+        movq -8(%rbp), %rdi                 # move the value from the memory address to the register of the first argument
+        call    my_increment                # call my_increment 
 
         # output incremented number
 
