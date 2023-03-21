@@ -23,10 +23,12 @@
 my_main:
     pushq   %rbp                        # push base register onto stack so later can                                          access variable containing string
     movq    %rsp, %rbp                  # move the stack pointer to point to the same                                         location as the base register
-    leaq    string_to_print(%rip), %rdi # using the instruction pointer, we load the value                                    we want to print onto the first argument register
-    movq    $0, %rax                    # move 0 to rax register so that the system calls                                     the correct function
+
+    leaq    string_to_print(%rip), %rdi # using the instruction pointer, we load the value we want to print onto the first argument register
+    movq    $0, %rax                    # move 0 to rax register so that the system calls  the correct function
     call    printf                      # call the print function
+
     
 end:
-    movq     $0, %rdi                   # move 0 into the first argument register so that                                     we can call exit(0) when we exit
+    movq     $0, %rdi                   # move 0 into the first argument register so that   we can call exit(0) when we exit
     call     exit                       # calls the exit function to exit the program
