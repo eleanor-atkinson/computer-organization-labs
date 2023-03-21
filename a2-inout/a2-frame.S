@@ -53,6 +53,11 @@ inout:
         movq -8(%rbp), %rdi                 # move the value from the memory address to the register of the first argument
         call    my_increment                # call my_increment
 
+        movq %rax, %rsi                     # move rax (where we returned the increment to) to rsi (second argument register)
+        leaq format_string(%rip), %rdi      # using instruction pointer, load the value we want to print onto the first argument register
+        movq    $0, %rax                    # move 0 to rax register so that the system calls the correct function
+        call    printf                      # call the print function from the C standard library
+
         # output incremented number
 
 my_increment:
