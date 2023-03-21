@@ -51,12 +51,19 @@ inout:
         call scanf                          # call scanf from the C standard library
 
         movq -8(%rbp), %rdi                 # move the value from the memory address to the register of the first argument
-        call    my_increment                # call my_increment 
+        call    my_increment                # call my_increment
 
         # output incremented number
 
 my_increment:
-        # IMPLEMENT ME
+        pushq %rbp                          # boilerplate for setting up local stack
+        movq %rsp, %rbp
 
+        movq %rdi, %rax                     # move return register into the register of the first argument
+        addq $1, %rax                       # add 1 to value in the return register
+
+        movq %rbp, %rsp                     # move register of the base pointer to the reigster of the stack pointer
+        popq %rbp                           # pop base pointer (remove base pointer aka first element of the stack)
+        ret
 
 
