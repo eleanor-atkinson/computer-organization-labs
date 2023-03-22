@@ -21,8 +21,8 @@
 .global my_main                         # make my_main accessible globally
 
 my_main:
-    pushq   %rbp                        # push base register onto stack so later can        access variable containing string
-    movq    %rsp, %rbp                  # move the stack pointer to point to the same       location as the base register
+    pushq   %rbp                        # push base register onto stack so later can access variable containing string
+    movq    %rsp, %rbp                  # move the stack pointer to point to the same location as the base register
 
     leaq    string_to_print(%rip), %rdi # using the instruction pointer, we load the value we want to print onto the first argument register
     movq    $0, %rax                    # move 0 to rax register so that the system calls  the correct function
