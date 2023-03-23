@@ -27,7 +27,6 @@ my_main:
     pushq %rbp                          # push base register onto main local stack
     movq %rsp, %rbp                     # move stack pointer to point to same location as base register on inout local stack
 
-
     subq $16, %rsp                      # move the stack pointer two positions forward so we know where the end is
 
     # to get input
@@ -39,8 +38,6 @@ my_main:
     # load number
     movq -8(%rbp), %rdi                 # load input into first argument
     call factorial                      # call factorial function
-
-    
 
     # print
     movq %rax, %rsi                     # move rax (where we returned the increment to) to rsi (second argument register)
@@ -57,4 +54,22 @@ factorial:
     pushq %rbp                          # push base register onto main local stack
     movq %rsp, %rbp                     # move stack pointer to point to same location as base register on inout local stack
 
+    movq %rdi, -8(%rbp)                 # move the first argument onto the factorial local stack
+    cmpq $1, -8(%rbp)                   # if its equal to 1, we return 1 because 1! = 1
+    jle base_case
+    
+
+    movq -8(%rbp), %rdi                 # move the base into the first argument register
+    decq %rdi                           # subtract base by 1
+    call factorial                      # call the function
+    
+    imulq -8(%rdi), %rax                # multiply result of the recursive call by the base
+    jmp end_factorial_function          # jump to the end
+
     # base case (epilogue)
+base_case:
+    movq $1, %rax                       # move 1 into the return register
+    
+end_factorial_function:
+    leave
+    ret
