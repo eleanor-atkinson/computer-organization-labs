@@ -53,17 +53,18 @@ factorial:
     # boilerplate
     pushq %rbp                          # push base register onto main local stack
     movq %rsp, %rbp                     # move stack pointer to point to same location as base register on inout local stack
+    
+    subq $16, %rsp                      # move the stack pointer two positions forward so we know where the end is
 
-    movq %rdi, -8(%rbp)                 # move the first argument onto the factorial local stack
+    movq %rdi, -8(%rbp)                 # move the first argument register onto the factorial local stack
     cmpq $1, -8(%rbp)                   # if its equal to 1, we return 1 because 1! = 1
     jle base_case
     
-
-    movq -8(%rbp), %rdi                 # move the base into the first argument register
+    movq %rdi, -8(%rbp)                 # move the first argument register into the first position of the factorial local stack
     decq %rdi                           # subtract base by 1
     call factorial                      # call the function
     
-    imulq -8(%rdi), %rax                # multiply result of the recursive call by the base
+    imulq -8(%rbp), %rax                # multiply result of the recursive call by the base
     jmp end_factorial_function          # jump to the end
 
     # base case (epilogue)
